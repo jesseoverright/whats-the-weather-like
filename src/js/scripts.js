@@ -13,16 +13,16 @@ $(document).ready(function() {
 
             $.post( 'php/get-comments.php' , { city: city }, function(data) {
                 $('.comments').html(data);
+
+                // process form data from adding a comment 
+                $('#comment-form').submit(function(e) {
+                    e.preventDefault();
+
+                    $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: 'stuff' }, function(data) {
+                        console.log('add a comment now');
+                    });
+                })
             });
         });
     });
-
-    // process form data from adding a comment 
-    $('#comment-form').submit(function(e) {
-        e.preventDefault();
-
-        $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: 'stuff' }, function(data) {
-            console.log('add a comment now');
-        });
-    })
 });

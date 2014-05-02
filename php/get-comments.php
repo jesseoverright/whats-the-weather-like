@@ -4,12 +4,7 @@
  * get-comments.php loads current comments from the database based on location
  */
 
-// get location details
-?>
-<pre>
-<?php print_r($_POST); ?>
-</pre>
-<?php
+// get location details from wunderground
 $location = $_POST['city'];
 echo "<h2>Comments about " . $location . "</h2>";
 
