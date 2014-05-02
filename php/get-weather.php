@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * get-weather.php accepts POST data and handles data validation as well as calling the wunderground api
+ */
+
 $json = array();
 
 $validation_error = "Your location was not recognized. A location must be in city, state or zip code format.";
@@ -60,10 +64,4 @@ if ( ! empty( $wunderground_api ) && empty($json['errors']) ) {
 }
 
 // return results as json object
-//echo json_encode($json);
-
-?>
-<pre>
-<?php print_r($json); ?>
-</pre>
-<?php
+echo json_encode($json);

@@ -12,11 +12,11 @@
 </head>
 <body>
 
-<form method="POST">
+<form id="location-form" method="POST">
 
     <label for="location">What's the weather like in...</label>
     <input id="location" name="location" type="text" placeholder="City, STATE">
-    <button type="submit">Submit </button>
+    <button type="submit">Submit</button>
 
 </form>
 
