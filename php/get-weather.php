@@ -16,7 +16,8 @@ if ( is_numeric ( $location ) ) {
     else {
         $zip = $location;
 
-        $wunderground_api = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$zip.json";
+        $wunderground_api['conditions'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$zip.json";
+        $wunderground_api['forecast'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/forecast/q/$zip.json";
     }
 } else {
     // isloate city from state using comma as delimiter
@@ -31,14 +32,18 @@ if ( is_numeric ( $location ) ) {
         // calidate state city wunderground
         $state = strtoupper( substr( trim( $location[1] ), 0, 2 ) );
 
-        $wunderground_api = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$state/$city.json";
+        $wunderground_api['conditions'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$state/$city.json";
+
+        $wunderground_api['forecast'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/forecast/q/$state/$city.json";
     }
 
 }
 
-// if api call has been constructed and no errors have been triggered, make wunderground api call
+// if api calls have been constructed and no errors have been triggered, make wunderground api call
 if ( ! empty( $wunderground_api ) && empty($json['errors']) ) {
-    $json_string = file_get_contents( $wunderground_api );
+    
+    // get current conditions
+    $json_string = file_get_contents( $wunderground_api['conditions'] );
     $parsed_json = json_decode( $json_string );
     $current_conditions = $parsed_json->current_observation;
 
@@ -60,7 +65,16 @@ if ( ! empty( $wunderground_api ) && empty($json['errors']) ) {
         );
     }
 
-    
+    // get forecast
+    $json_string = file_get_contents( $wunderground_api['forecast'] );
+    $parsed_json = json_decode( $json_string );
+    $forecast = $parsed_json->forecast->txt_forecast->forecastday;
+
+    $json['forecast'] = array (
+        'today' => $forecast[0]->fcttext,
+        'tonight' => $forecast[1]->fcttext,
+        'tomorrow' => $forecast[2]->fcttext,
+    );
 }
 
 // return results as json object
