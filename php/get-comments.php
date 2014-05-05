@@ -8,12 +8,12 @@
 $location = $_POST['city'];
 echo "<h2>Comments about " . $location . "</h2>";
 
-// connect to database
-
-// return comments
-
+// get coments from database
+include 'LocationComments.class.php';
+$comments = new LocationComments( $location );
 
 ?>
+
 <form id="comment-form" method="POST">
 
     <label for="comment">How does this make you feel?</label>
@@ -21,3 +21,11 @@ echo "<h2>Comments about " . $location . "</h2>";
     <button type="submit">Comment</button>
 
 </form>
+
+<?php
+
+// return comments
+
+foreach ( $comments->allComments() as $comment ) {
+    $comments->renderComment( $comment );
+}
