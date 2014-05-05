@@ -29,9 +29,14 @@ body {
 #location-form {
     max-width: $mobile-width;
     margin: 0 auto;
+    padding: 0 5%;
     
     input[type="text"] {
-        width: 80%;
+        width: 70%;
+    }
+
+    button {
+        width: 25%;
     }
 }
 
@@ -53,8 +58,20 @@ body {
             float: left;
         }
         .details {
+            @include text(0.9*$font-size);
             float: right;
-            max-width: 30%;
+            width: 27%;
+            font-size: 0.8*$font-size;
+
+
+            @media (max-width: $tablet-width) {
+                width: 100%;
+                list-style-position: inside;
+            }
+
+            @media (max-width: $mobile-width) {
+                font-size: $font-size;
+            }
         }
         .conditions {
             clear: both;
