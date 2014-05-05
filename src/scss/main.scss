@@ -1,1 +1,91 @@
 @import 'compass/reset';
+@import 'compass/css3';
+
+$font-size: 16px;
+$padding-size: 15px;
+
+$tablet-width: 870px;
+
+$mobile-width: 600px;
+
+@import 'typography';
+
+@mixin column {
+    width: 40%;
+    margin: 0 3%;
+    padding: 2%;
+    float: left;
+
+    @media (max-width: $mobile-width) {
+        width: 90%;
+    }
+}
+
+body {
+    height: 100%;
+    background-color: skyblue;
+}
+
+#location-form {
+    max-width: $mobile-width;
+    margin: 0 auto;
+    
+    input[type="text"] {
+        width: 80%;
+    }
+}
+
+#container {
+    @include text();
+    width: 100%;
+    margin: 20px auto;
+    min-height: 550px;
+}
+
+.weather {
+    @include column();
+    .current-conditions {
+        min-height: 200px;
+        margin: 20px 0;
+
+        .temperature {
+            @include text(90px);
+            float: left;
+        }
+        .details {
+            float: right;
+            max-width: 30%;
+        }
+        .conditions {
+            clear: both;
+        }
+    }
+
+    .observation {
+        font-size: 12px;
+    }
+}
+
+.comments {
+    @include column();
+}
+
+.comment {
+    @include border-radius(4px, 4px);
+    background-color: #fff;
+    padding: $padding-size;
+    margin: $padding-size 0;
+}
+
+footer {
+    @include text();
+    width: 230px;
+    margin: 0 auto;
+    clear: both;
+
+    img {
+        max-width: 100%;
+        width: 200px;
+        vertical-align: text-bottom;
+    }
+}

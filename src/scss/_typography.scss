@@ -1,0 +1,48 @@
+@mixin text($font-size: $font-size) {
+    font-family: Helvetica, sans-serif;
+    padding-bottom: $padding-size;
+    font-size: $font-size;
+    line-height: 1.25em;
+    word-wrap: break-word;
+}
+
+h1 {
+    @include text(30px);
+}
+
+h2 {
+    @include text(24px);
+}
+
+h3 {
+    @include text(20px);
+    line-height: 0.75em;
+    font-weight: bold;
+}
+
+h3, h4, h5, h6, p {
+    @include text();
+}
+
+ul {
+    list-style: circle outside;
+    li {
+        font-size: 0.8*$font-size;
+    }
+}
+
+form {
+    input[type="text"], textarea {
+        width: 97%;
+        font-size: 1.25*$font-size;
+        padding: 1%;
+        border: 2px inset;
+        margin-bottom: $padding-size;
+        max-height: 190px;
+        @include border-radius(4px, 4px);
+    }
+
+    button {
+        font-size: 1.25*$font-size;
+    }
+}

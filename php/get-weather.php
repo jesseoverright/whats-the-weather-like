@@ -55,10 +55,10 @@ if ( ! empty( $wunderground_api ) && empty($json['errors']) ) {
         'observation_location' => $current_conditions->observation_location->full,
         'observation_time' => $current_conditions->observation_time,
         'weather' => $current_conditions->weather,
-        'temperature' => $current_conditions->temperature_string,
+        'temperature' => $current_conditions->temp_f,
         'relative_humidity' => $current_conditions->relative_humidity,
         'wind_speed' => $current_conditions->wind_string,
-        'feelslike' => $current_conditions->feelslike_string,
+        'feelslike' => $current_conditions->feelslike_f,
         'wind_chill' => $current_conditions->windchill_string,
         'UV' => $current_conditions->UV,
         'heat_index_string' => $current_conditions->heat_index_string
