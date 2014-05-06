@@ -1,7 +1,7 @@
 @import 'compass/reset';
 @import 'compass/css3';
 
-$font-size: 16px;
+$font-size: 17px;
 $padding-size: 15px;
 
 $tablet-width: 870px;
@@ -11,13 +11,14 @@ $mobile-width: 600px;
 @import 'typography';
 
 @mixin column {
-    width: 40%;
-    margin: 0 3%;
+    width: 46%;
+    margin: 0;
     padding: 2%;
     float: left;
 
     @media (max-width: $mobile-width) {
-        width: 90%;
+        width: 89%;
+        margin: 0 3.5%;
     }
 }
 
@@ -42,16 +43,25 @@ body {
 
 #container {
     @include text();
-    width: 100%;
+    width: 92%;
     margin: 20px auto;
-    min-height: 550px;
+    min-height: 580px;
+    padding: 0 4%;
+
+    @media (max-width: $tablet-width) {
+        width: 100%;
+        padding: 0;
+    }
 }
 
 .weather {
     @include column();
     .current-conditions {
-        min-height: 200px;
-        margin: 20px 0;
+        min-height: 160px;
+        margin: 10px 0 20px;
+        background-color: #fff;
+        padding: 2*$padding-size;
+        @include border-radius(4px, 4px);
 
         .temperature {
             @include text(90px);
@@ -60,8 +70,8 @@ body {
         .details {
             @include text(0.9*$font-size);
             float: right;
-            width: 27%;
-            font-size: 0.8*$font-size;
+            width: 30%;
+            font-size: 0.9*$font-size;
 
 
             @media (max-width: $tablet-width) {
@@ -79,26 +89,39 @@ body {
     }
 
     .observation {
-        font-size: 12px;
+        font-size: 0.75*$font-size;
     }
 }
 
 .comments {
     @include column();
-}
 
-.comment {
-    @include border-radius(4px, 4px);
-    background-color: #fff;
-    padding: $padding-size;
-    margin: $padding-size 0;
-}
+    #comment-form {
+        textarea {
+            height: 64px;
+        }
+    }
 
+    .comment {
+        @include border-radius(4px, 4px);
+        background-color: #fff;
+        padding: $padding-size;
+        margin: $padding-size 0;
+
+        .date-posted {
+            text-align:right;
+            font-size: 0.9*$font-size;
+        }
+    }
+
+    
+}
 footer {
     @include text();
-    width: 230px;
+    width: 240px;
     margin: 0 auto;
     clear: both;
+    text-align: center;
 
     img {
         max-width: 100%;

@@ -7,20 +7,20 @@
 }
 
 h1 {
-    @include text(30px);
+    @include text(2.25*$font-size);
 }
 
 h2 {
-    @include text(24px);
+    @include text(1.75*$font-size);
 }
 
 h3 {
-    @include text(20px);
+    @include text(1.5*$font-size);
     line-height: 0.75em;
     font-weight: bold;
 }
 
-h3, h4, h5, h6, p {
+h4, h5, h6, p {
     @include text();
 }
 
