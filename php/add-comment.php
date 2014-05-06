@@ -3,6 +3,7 @@
 /**
  * add-comment.php accepts POST data and handles validation for adding new comments to a location
  */
+
 include 'LocationComments.class.php';
 
 // sanitize user data

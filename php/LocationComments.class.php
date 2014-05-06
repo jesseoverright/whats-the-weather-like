@@ -1,9 +1,27 @@
 <?php
 
+/**
+ * LocationComments class handles all database interactions related to comments
+ */
+
 class LocationComments {
+    /**
+     * multidimensional array of comments (comment, date) from this location
+     * @var array 
+     */
     private $comments = array();
+
+    /**
+     * current location comments are related to
+     * @var string
+     */
     private $location;
 
+    /**
+     * Constructor method
+     * queries the database for comments on provided location
+     * @param string $location
+     */
     public function __construct( $location ) {
 
         $this->location = $location;
@@ -32,14 +50,25 @@ class LocationComments {
             );
         }
 
+        // clean up database connection
         $statement->close();
         $db->close();
     }
 
+    /**
+     * Returns multidimensional array of current comments
+     * @return array in format comment['comment'], comment['date']
+     */
     public function allComments() {
         return $this->comments;
     }
 
+    /**
+     * static function to insert comment into the database 
+     * @param string $comment  text of the comment to save
+     * @param string $location location
+     * @return   success status of insert
+     */
     public static function addComment( $comment, $location ) {
         try {
             $db = new mysqli("localhost", "weather", "password", "weather_comments");
@@ -57,8 +86,16 @@ class LocationComments {
 
             return TRUE;
         }
+
+        return FALSE;
     }
 
+    /**
+     * Returns html snippet of comment
+     * @param  string $comment comment to render
+     * @param  string $date    date of comment, or blank for today
+     * @return html          html snippet
+     */
     public static function renderComment( $comment, $date = '') {
         if ( $date == '' ) {
             $date = date('F jS, Y');
