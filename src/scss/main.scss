@@ -3,6 +3,8 @@
 
 $font-size: 17px;
 $padding-size: 15px;
+$font-family: Helvetica, sans-serif;
+
 
 $tablet-width: 870px;
 
@@ -25,6 +27,7 @@ $mobile-width: 600px;
 body {
     height: 100%;
     background-color: skyblue;
+    font-family: $font-family;
 }
 
 #location-form {
@@ -47,6 +50,7 @@ body {
     margin: 20px auto;
     min-height: 580px;
     padding: 0 4%;
+    overflow: hidden;
 
     @media (max-width: $tablet-width) {
         width: 100%;
@@ -84,12 +88,36 @@ body {
             }
         }
         .conditions {
+            @include text(1.75*$font-size);//font-size: 1.75*$font-size;
             clear: both;
+
+            img {
+                display: inline-block;
+                vertical-align: middle;
+                padding: 0 0 0 $padding-size;
+                width: 75px;
+            }
         }
     }
 
     .observation {
         font-size: 0.75*$font-size;
+    }
+
+    .forecast {
+        overflow: hidden;
+        img {
+            float: left;
+            padding: 42px $padding-size 20px;
+        }
+
+        h3 {
+            border-bottom: 1px solid black;
+        }
+
+        p {
+            padding-top: 10px;
+        }
     }
 }
 
@@ -112,15 +140,12 @@ body {
             text-align:right;
             font-size: 0.9*$font-size;
         }
-    }
-
-    
+    }    
 }
 footer {
     @include text();
     width: 240px;
     margin: 0 auto;
-    clear: both;
     text-align: center;
 
     img {

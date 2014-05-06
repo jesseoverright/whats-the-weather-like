@@ -5,41 +5,69 @@ $(document).ready(function() {
         // prevent standard form submit
         e.preventDefault();
 
-        // request weather for location
+        // request weather details for location
         $.post( 'php/get-weather.php' , { location: $('#location').val() }, function(data) {
             var weather = $.parseJSON(data);
 
+            // clear any previous error messages
+            $('.error').remove();
+
+            // clear out any previous weather data
+            $('.weather, .comments').fadeOut().empty();
+
+            // display error messages
+            if ( weather.errors !== undefined ) {
+                weather.errors.forEach(function (value) {
+                    $('<p class="error">' + value + '</p>').appendTo('#location-form').hide().fadeIn();
+                })
+
+                return false;
+            }
+            else {
+            }
+
+            // generate the html for weather based on returned json
             var html = '<h1 class="current-location">' + weather.location + '</h1>'; 
             html += '<div class="current-conditions"><div class="temperature">' + weather.temperature + '&deg;</div><ul class="details">';
 
-            html += '<li>Feels like: ' + weather.feelslike + '&deg;</li><li>Humidity: ' + weather.relative_humidity + '</li><li>Wind Speed: ' + weather.wind_speed + '</li><li>Wind Chill: ' + weather.wind_chill + '</li><li>Heat Index: ' + weather.heat_index_string + '</li>';
+            html += '<li>Feels like: ' + weather.feelslike + '&deg;</li><li>Humidity: ' + weather.relative_humidity + '</li><li>Wind Speed: ' + weather.wind_speed + '</li>';
+            if ( weather.wind_chill != 'NA' ) html += '<li>Wind Chill: ' + weather.wind_chill + '</li>';
+            if ( weather.heat_index_string != 'NA' ) html += '<li>Heat Index: ' + weather.heat_index_string + '</li>';
 
-            html += '</ul><div class="conditions">' + weather.weather + '</div></div>';
+            html += '</ul><div class="conditions">' + weather.weather + '<img src="' + weather.icon + '" alt="' + weather.icon_alt + '"></div></div>';
 
-            html += '<div class="forecast"><h3>Today</h3>';
-            html += '<p>' + weather.forecast.today + ' ' + weather.forecast.tonight + '</p></div>';
-            html += '<div class="forecast"><h3>Tomorrow</h3>';
-            html += '<p>' + weather.forecast.tomorrow + '</p></div>';
+            html += '<div class="forecast"><img src="' + weather.forecast.today.icon + '" alt="' + weather.forecast.today.icon_alt + '"><h3>Today</h3>';
+            html += '<p>' + weather.forecast.today.text + '</p></div>';
+            html += '<div class="forecast"><img src="' + weather.forecast.tonight.icon + '" alt="' + weather.forecast.tonight.icon_alt + '"><h3>Tonight</h3>';
+            html += '<p>' + weather.forecast.tonight.text + '</p></div>';
+            html += '<div class="forecast"><img src="' + weather.forecast.tomorrow.icon + '" alt="' + weather.forecast.tomorrow.icon_alt + '"><h3>Tomorrow</h3>';
+            html += '<p>' + weather.forecast.tomorrow.text + '</p></div>';
         
             html += '<div class="observation">' + weather.observation_time + ' from ' + weather.observation_location + '</div>';
 
-            $('.weather').html( html );
+            $('.weather').hide().html( html ).fadeIn();
             
             var city = weather.location;
 
+            // load up comments for valid locations
             if ( city !== undefined ) {
                 $.post( 'php/get-comments.php' , { city: city }, function(data) {
-                    $('.comments').html(data);
+                    $('.comments').hide().html( data ).fadeIn();
 
-                    // process form data from adding a comment 
+                    // add event to process form data from adding a new comment 
                     $('#comment-form').submit(function(e) {
                         e.preventDefault();
 
                         $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: city }, function(data) {
-                            $('#comment-form').after(data);
+                            // clear out comment
+                            $('#comment').val('');
+                            $(data).insertAfter('#comment-form').hide().fadeIn();
+                            //$('#comment-form').after(data).hide().fadeIn();
                         });
                     })
                 });
+            } else {
+                $('.comments').fadeOut().empty();
             }
         });
     });

@@ -1,5 +1,5 @@
 @mixin text($font-size: $font-size) {
-    font-family: Helvetica, sans-serif;
+    font-family: $font-family;
     padding-bottom: $padding-size;
     font-size: $font-size;
     line-height: 1.25em;
@@ -16,7 +16,7 @@ h2 {
 
 h3 {
     @include text(1.5*$font-size);
-    line-height: 0.75em;
+    padding-bottom: $padding-size/3;
     font-weight: bold;
 }
 
