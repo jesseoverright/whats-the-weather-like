@@ -1,15 +1,12 @@
 <?php
 
 /**
- * src/settings.php contains login information including database settings api keys
+ * app-config.php contains login information including database settings api keys
  */
-
-
-//$db = new mysqli("localhost", "t3", "A2ztvTm8FxJpGhZp", "t3");
-
 
 $settings = array (
     'dbconfig' => array (
+        'host' => 'localhost',
         'database' => 'weather_comments',
         'user' => 'weather',
         'password' => 'password',

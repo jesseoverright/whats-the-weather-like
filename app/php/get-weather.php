@@ -7,7 +7,7 @@
 $json = array();
 
 
-include '../../src/settings.php';
+include '../../app-config.php';
 
 $validation_error = "Your location was not recognized as entered. A location must be in city, state or zip code format.";
 

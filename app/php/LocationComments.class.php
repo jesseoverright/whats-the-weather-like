@@ -4,7 +4,7 @@
  * LocationComments class handles all database interactions related to comments
  */
 
-include '../../src/settings.php';
+include '../../app-config.php';
 
 class LocationComments {
     /**
@@ -32,7 +32,7 @@ class LocationComments {
 
         // connect to database
         try {
-            $db = new mysqli("localhost", $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
+            $db = new mysqli( $settings['dbconfig']['host'], $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
         } catch  (Exception $e) {
             echo 'Database is unavailable';
         }
@@ -76,7 +76,7 @@ class LocationComments {
         global $settings;
         
         try {
-            $db = new mysqli("localhost", $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
+            $db = new mysqli( $settings['dbconfig']['host'], $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
         } catch (Exception $e) {
             echo 'Database is unavailable';
         }
