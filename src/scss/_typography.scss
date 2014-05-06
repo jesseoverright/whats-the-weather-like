@@ -4,6 +4,11 @@
     font-size: $font-size;
     line-height: 1.25em;
     word-wrap: break-word;
+    font-weight: lighter;
+}
+
+strong {
+    font-weight: normal;
 }
 
 h1 {
@@ -41,12 +46,13 @@ form {
 
     button {
         font-size: 1.25*$font-size;
-        height: 37px;
+        height: 1.85*$font-size;
     }
 }
 
 .error {
-    background-color: #f5b7ab;
+    background-color: #E99180;
+    font-weight: normal;
     @include border-radius(4px, 4px);
     padding: $padding-size/2;
     margin-bottom: $padding-size;

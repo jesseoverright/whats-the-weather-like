@@ -1,7 +1,7 @@
 @import 'compass/reset';
 @import 'compass/css3';
 
-$font-size: 17px;
+$font-size: 16px;
 $padding-size: 15px;
 $font-family: Helvetica, sans-serif;
 
@@ -108,7 +108,7 @@ body {
         overflow: hidden;
         img {
             float: left;
-            padding: 42px $padding-size 20px;
+            padding: 2.625*$font-size $padding-size 1.25*$font-size;
         }
 
         h3 {
@@ -126,7 +126,7 @@ body {
 
     #comment-form {
         textarea {
-            height: 64px;
+            height: 3.2*$font-size;
         }
     }
 

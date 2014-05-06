@@ -4,7 +4,7 @@
  * LocationComments class handles all database interactions related to comments
  */
 
-include '../src/settings.php';
+include '../../src/settings.php';
 
 class LocationComments {
     /**

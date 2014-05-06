@@ -10,7 +10,7 @@ apt-get install -y apache2 mysql-server-5.5 php5-mysql php5
 
 # symlink DocRoot to vagrant
 rm -rf /var/www
-ln -fs /vagrant /var/www
+ln -fs /vagrant/app /var/www
 
 # set up the database
 if [ ! -f /var/log/databasesetup ];

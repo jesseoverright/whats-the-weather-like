@@ -35,9 +35,9 @@ $(document).ready(function() {
             var html = '<h1 class="current-location">' + weather.location + '</h1>'; 
             html += '<div class="current-conditions"><div class="temperature">' + weather.temperature + '&deg;</div><ul class="details">';
 
-            html += '<li>Feels like: ' + weather.feelslike + '&deg;</li><li>Humidity: ' + weather.relative_humidity + '</li><li>Wind Speed: ' + weather.wind_speed + '</li>';
-            if ( weather.wind_chill != 'NA' ) html += '<li>Wind Chill: ' + weather.wind_chill + '</li>';
-            if ( weather.heat_index_string != 'NA' ) html += '<li>Heat Index: ' + weather.heat_index_string + '</li>';
+            html += '<li><strong>Feels like:</strong> ' + weather.feelslike + '&deg;</li><li><strong>Humidity:</strong> ' + weather.relative_humidity + '</li><li><strong>Wind Speed:</strong> ' + weather.wind_speed + '</li>';
+            if ( weather.wind_chill != 'NA' ) html += '<li><strong>Wind Chill:</strong> ' + weather.wind_chill + '</li>';
+            if ( weather.heat_index_string != 'NA' ) html += '<li><strong>Heat Index:</strong> ' + weather.heat_index_string + '</li>';
 
             html += '</ul><div class="conditions">' + weather.weather + '<img src="' + weather.icon + '" alt="' + weather.icon_alt + '"></div></div>';
 
