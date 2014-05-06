@@ -5,9 +5,12 @@
  */
 include 'LocationComments.class.php';
 
-// validate and sanitize
+// sanitize user data
 $location = $_POST['city'];
 $comment = $_POST['comment'];
+
+// scrub any html or js from user input
+$comment = htmlspecialchars( strip_tags( trim ($comment ) ) );
 
 // save to database
 if ( LocationComments::addComment($comment, $location) ) {

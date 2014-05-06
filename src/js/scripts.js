@@ -15,6 +15,11 @@ $(document).ready(function() {
             // clear out any previous weather data
             $('.weather, .comments').fadeOut().empty();
 
+            // validate user input is not html, will be sanitized later
+            if (/<[a-z][\s\S]*>/i.test( $('#location').val() ) ) {
+                $('<p class="error">HTML characters are not allowed and will be removed.</p>').appendTo('#location-form').hide().fadeIn();
+            }
+
             // display error messages
             if ( weather.errors !== undefined ) {
                 weather.errors.forEach(function (value) {
@@ -52,6 +57,8 @@ $(document).ready(function() {
             // load up comments for valid locations
             if ( city !== undefined ) {
                 $.post( 'php/get-comments.php' , { city: city }, function(data) {
+
+
                     $('.comments').hide().html( data ).fadeIn();
 
                     // add event to process form data from adding a new comment 
@@ -59,6 +66,15 @@ $(document).ready(function() {
                         e.preventDefault();
 
                         $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: city }, function(data) {
+                            // clear any previous error messages
+                            $('#comment-form .error').remove();
+
+                            // validate user input is not html, will be sanitized later
+                            if (/<[a-z][\s\S]*>/i.test( $('#comment').val() ) ) {
+                                $('<p class="error">HTML characters are not allowed and will be removed.</p>').insertAfter($('#comment')).hide().fadeIn();
+                                console.log('html found');
+                            }
+
                             // clear out comment
                             $('#comment').val('');
                             $(data).insertAfter('#comment-form').hide().fadeIn();

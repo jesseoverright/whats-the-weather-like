@@ -41,8 +41,13 @@ form {
 
     button {
         font-size: 1.25*$font-size;
-        height: 2em;
-        /*@include border-radius(4px, 4px);*/
-
+        height: 37px;
     }
+}
+
+.error {
+    background-color: #f5b7ab;
+    @include border-radius(4px, 4px);
+    padding: $padding-size/2;
+    margin-bottom: $padding-size;
 }
