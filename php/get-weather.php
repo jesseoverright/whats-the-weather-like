@@ -6,6 +6,8 @@
 
 $json = array();
 
+include '../src/settings.php';
+
 $validation_error = "Your location was not recognized as entered. A location must be in city, state or zip code format.";
 
 $location = $_POST['location'];
@@ -16,8 +18,8 @@ if ( is_numeric ( $location ) ) {
     else {
         $zip = $location;
 
-        $wunderground_api['conditions'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$zip.json";
-        $wunderground_api['forecast'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/forecast/q/$zip.json";
+        $wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/geolookup/conditions/q/$zip.json";
+        $wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/forecast/q/$zip.json";
     }
 } else {
     // isloate city from state using comma as delimiter
@@ -32,9 +34,9 @@ if ( is_numeric ( $location ) ) {
         // calidate state city wunderground
         $state = strtoupper( substr( trim( $location[1] ), 0, 2 ) );
 
-        $wunderground_api['conditions'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/geolookup/conditions/q/$state/$city.json";
+        $wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/geolookup/conditions/q/$state/$city.json";
 
-        $wunderground_api['forecast'] = "http://api.wunderground.com/api/b783d7a35bf36bb2/forecast/q/$state/$city.json";
+        $wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/forecast/q/$state/$city.json";
     }
 
 }

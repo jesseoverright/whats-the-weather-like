@@ -4,6 +4,8 @@
  * LocationComments class handles all database interactions related to comments
  */
 
+include '../src/settings.php';
+
 class LocationComments {
     /**
      * multidimensional array of comments (comment, date) from this location
@@ -26,10 +28,11 @@ class LocationComments {
 
         $this->location = $location;
 
+        global $settings;
+
         // connect to database
-        # $db = new mysqli("localhost", "t3", "A2ztvTm8FxJpGhZp", "t3");
         try {
-            $db = new mysqli("localhost", "weather", "password", "weather_comments");
+            $db = new mysqli("localhost", $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
         } catch  (Exception $e) {
             echo 'Database is unavailable';
         }
@@ -70,8 +73,10 @@ class LocationComments {
      * @return   success status of insert
      */
     public static function addComment( $comment, $location ) {
+        global $settings;
+        
         try {
-            $db = new mysqli("localhost", "weather", "password", "weather_comments");
+            $db = new mysqli("localhost", $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
         } catch (Exception $e) {
             echo 'Database is unavailable';
         }
