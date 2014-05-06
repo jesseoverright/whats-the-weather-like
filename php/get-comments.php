@@ -17,7 +17,7 @@ $comments = new LocationComments( $location );
 <form id="comment-form" method="POST">
 
     <label for="comment">How does this make you feel?</label>
-    <textarea id="comment" name="comment" placeholder="Write your comment about the weather at this location here."></textarea>
+    <textarea id="comment" name="comment" placeholder="Write your comment about the weather at this location."></textarea>
     <button type="submit">Comment</button>
 
 </form>
@@ -27,5 +27,5 @@ $comments = new LocationComments( $location );
 // return comments
 
 foreach ( $comments->allComments() as $comment ) {
-    $comments->renderComment( $comment );
+    $comments->renderComment( $comment['comment'], $comment['date'] );
 }
