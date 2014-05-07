@@ -1,6 +1,6 @@
 # What's the Weather Like...?
 
-* Website: [jesseoverright.com/weather](http://www.jesseoverright.com/weather/)
+* Online: [jesseoverright.com/weather](http://www.jesseoverright.com/weather/)
 
 What's the Weather Like...? is a simple, reponsive, single-page weather application that utilizes the [wunderground api](http://www.wunderground.com/weather/api/) to look up weather conditions and allow users to comment on conditions at a location. Locations can be in either city, state or zip code format. All data is returned via AJAX.
 
@@ -15,6 +15,7 @@ Comments are stored in a mysql database. All database interactions are handled i
 ### Key Files
 
 * `index.html` - main landing page
+* `css/main.css` - compiled css file from scss
 * `js/scripts.min.js` - minified javascript file for handling ajax requests, rendering weather data, and adding/displaying comments
 * `php/LocationComments.class.php` - Handles all database interactions and html rendering related to comments
 * `php/get-weather.php` - returns JSON data based on location
