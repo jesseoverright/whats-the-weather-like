@@ -11,7 +11,7 @@ $location = $_POST['city'];
 $comment = $_POST['comment'];
 
 // scrub any html or js from user input
-$comment = htmlspecialchars( strip_tags( trim ($comment ) ) );
+$comment = htmlspecialchars( strip_tags( trim ( nl2br( $comment) ), '<br>' ) );
 
 // save to database
 if ( LocationComments::addComment($comment, $location) ) {

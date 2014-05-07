@@ -41,12 +41,12 @@ $(document).ready(function() {
 
             html += '</ul><div class="conditions">' + weather.weather + '<img src="' + weather.icon + '" alt="' + weather.icon_alt + '"></div></div>';
 
-            html += '<div class="forecast"><img src="' + weather.forecast.today.icon + '" alt="' + weather.forecast.today.icon_alt + '"><h3>Today</h3>';
-            html += '<p>' + weather.forecast.today.text + '</p></div>';
-            html += '<div class="forecast"><img src="' + weather.forecast.tonight.icon + '" alt="' + weather.forecast.tonight.icon_alt + '"><h3>Tonight</h3>';
-            html += '<p>' + weather.forecast.tonight.text + '</p></div>';
-            html += '<div class="forecast"><img src="' + weather.forecast.tomorrow.icon + '" alt="' + weather.forecast.tomorrow.icon_alt + '"><h3>Tomorrow</h3>';
-            html += '<p>' + weather.forecast.tomorrow.text + '</p></div>';
+            html += '<div class="forecast"><h3>Today</h3>';
+            html += '<p><img src="' + weather.forecast.today.icon + '" alt="' + weather.forecast.today.icon_alt + '">' + weather.forecast.today.text + '</p></div>';
+            html += '<div class="forecast"><h3>Tonight</h3>';
+            html += '<p><img src="' + weather.forecast.tonight.icon + '" alt="' + weather.forecast.tonight.icon_alt + '">' + weather.forecast.tonight.text + '</p></div>';
+            html += '<div class="forecast"><h3>Tomorrow</h3>';
+            html += '<p><img src="' + weather.forecast.tomorrow.icon + '" alt="' + weather.forecast.tomorrow.icon_alt + '">' + weather.forecast.tomorrow.text + '</p></div>';
         
             html += '<div class="observation">' + weather.observation_time + ' from ' + weather.observation_location + '</div>';
 

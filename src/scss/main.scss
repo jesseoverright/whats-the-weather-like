@@ -121,10 +121,6 @@ body {
 
     .forecast {
         overflow: hidden;
-        img {
-            float: left;
-            padding: 2.625*$font-size $padding-size 1.25*$font-size;
-        }
 
         h3 {
             border-bottom: 1px solid black;
@@ -132,6 +128,11 @@ body {
 
         p {
             padding-top: 10px;
+
+            img {
+                float: left;
+                padding: 0 $padding-size 1.25*$font-size;
+            }
         }
     }
 }
@@ -152,11 +153,14 @@ body {
     }
 
     .comment {
-        @include text($font-size);
         @include border-radius(4px, 4px);
         background-color: #fff;
         padding: $padding-size;
         margin: $padding-size 0;
+
+        p {
+            @include text($font-size);
+        }
 
         .date-posted {
             text-align:right;
