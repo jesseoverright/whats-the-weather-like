@@ -12,6 +12,10 @@ apt-get install -y apache2 mysql-server-5.5 php5-mysql php5
 rm -rf /var/www
 ln -fs /vagrant/app /var/www
 
+# change Apache httpd to run as vagrant user
+sed -i 's/www-data/vagrant/g' /etc/apache2/envvars
+sudo chown -R vagrant:www-data /var/lock/apache2
+
 # set up the database
 if [ ! -f /var/log/databasesetup ];
 then
