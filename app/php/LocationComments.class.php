@@ -110,7 +110,7 @@ class LocationComments {
         <div class="comment">
             <p><?php echo htmlspecialchars_decode($comment) ?></p>
             <div class="date-posted">
-                Posted on <?= $date ?><br>
+                From <?= $date ?><br>
                 <?= $conditions ?>
             </div>
         </div>
