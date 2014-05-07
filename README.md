@@ -44,7 +44,7 @@ To build the development environment, clone the repo and run:
 
 `vagrant up`
 
-After Vagrant has created the development environment, What's the Weather Like...? will be available at [http://localhost.com:1234](http://localhost.com:1234).
+After Vagrant has created the development environment, What's the Weather Like...? will be available at [localhost:1234](http://localhost:1234).
 
 ### Manually
 To manually install the app in a development or production environment, symlink the `app/` folder into your www directory. `app-settings.php` should be in the parent directory of `app/` for the app to work correctly.
