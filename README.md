@@ -1,17 +1,26 @@
 # What's the Weather Like...?
 
 * Website: [jesseoverright.com/weather](http://www.jesseoverright.com/weather/)
-* Source: [https://github.com/jesseoverright/whats-the-weather](https://github.com/jesseoverright/whats-the-weather/)
 
 What's the Weather Like...? is a simple, reponsive, single-page weather application that utilizes the [wunderground api](http://www.wunderground.com/weather/api/) to look up weather conditions and allow users to comment on conditions at a location. Locations can be in either city, state or zip code format. All data is returned via AJAX.
 
 ## Application Details
 
 ### Weather Data
-Weather data is validated and scrubbed in `php/get-weather.php`. The weather data returned as JSON and includes the current conditions and forecasts for the next few days for location, or error messages if the requested location is not in city, state or zip format. `js/scripts.min.js` renders the weather html snippet from the returned JSON.
+Location data is validated and scrubbed in `php/get-weather.php`. The resulting weather data is returned as JSON and includes the current conditions and forecasts for the next few days for location or error messages if the requested location is not found as typed. `js/scripts.min.js` renders the html from the returned JSON and inserts it into the DOM.
 
 ### Comments
-Comments are stored in a basic mysql database. All database interactions are handled in the php class `php/LocationComments.class.php`. `get-comments.php` and `add-comment.php` and php scripts that are executed via AJAX when a user adds a comment or looks up the weather. The resulting html is generated from individual comments as well as `get-comments.php` and inserted into the DOM.
+Comments are stored in a mysql database. All database interactions are handled in the php class `php/LocationComments.class.php`. `get-comments.php` and `add-comment.php` are php scripts that run via AJAX when a user adds a comment or looks up the weather at a location. The resulting html is inserted into the DOM using javascript.
+
+### Key Files
+
+* `index.html` - main landing page
+* `js/scripts.min.js` - minified javascript file for handling ajax requests, rendering weather data, and adding/displaying comments
+* `php/LocationComments.class.php` - Handles all database interactions and html rendering related to comments
+* `php/get-weather.php` - returns JSON data based on location
+* `php/get-comments.php` - generates comment form and comments related to location
+* `php/add-comment.php` - handles comment validation and saving via `LocationComments.class.php`
+
 
 ## Requirements
 Whats the Weather Like...? requires the LAMP stack. It was developed using:
