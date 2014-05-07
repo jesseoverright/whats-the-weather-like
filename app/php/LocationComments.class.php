@@ -44,7 +44,7 @@ class LocationComments {
 
         $statement->execute();
 
-        $statement->bind_result($comment, $date);
+        $statement->bind_result($comment, $date, $conditions);
 
         while ( $statement->fetch() ) {
             $this->comments[] = array(
