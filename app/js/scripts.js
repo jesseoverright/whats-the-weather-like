@@ -57,6 +57,8 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
             $('.weather').hide().html( html ).fadeIn();
             
             var city = weather.location;
+            var temp = weather.temperature;
+            var conditions = weather.weather;
 
             // load up comments for valid locations
             if ( city !== undefined ) {
@@ -69,7 +71,8 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                     $('#comment-form').submit(function(e) {
                         e.preventDefault();
 
-                        $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: city }, function(data) {
+                        $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: city, temp: temp, conditions: conditions }, function(data) {
+                            console.log('conditions are' + conditions);
                             // clear any previous error messages
                             $('#comment-form .error').remove();
 

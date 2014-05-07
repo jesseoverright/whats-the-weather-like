@@ -38,7 +38,7 @@ class LocationComments {
         }
 
         // load comments
-        $statement = $db->prepare("SELECT comment, date FROM comments WHERE location = ? ORDER BY date DESC");        
+        $statement = $db->prepare("SELECT comment, date, conditions FROM comments WHERE location = ? ORDER BY date DESC");        
 
         $statement->bind_param('s', $this->location);
 
@@ -50,6 +50,7 @@ class LocationComments {
             $this->comments[] = array(
                 'comment' => $comment,
                 'date' => date('F jS, Y', strtotime($date) ),
+                'conditions' => $conditions,
             );
         }
 
@@ -72,7 +73,7 @@ class LocationComments {
      * @param string $location location
      * @return   success status of insert
      */
-    public static function addComment( $comment, $location ) {
+    public static function addComment( $comment, $location, $conditions ) {
         global $settings;
         
         try {
@@ -81,9 +82,9 @@ class LocationComments {
             echo 'Database is unavailable';
         }
 
-        $statement = $db->prepare("INSERT INTO comments (location, comment, date) VALUES (?, ?, NOW())");
+        $statement = $db->prepare("INSERT INTO comments (location, comment, date, conditions) VALUES (?, ?, NOW(), ?)");
 
-        $statement->bind_param('ss', $location, $comment);
+        $statement->bind_param('sss', $location, $comment, $conditions);
 
         if ( $statement->execute() ) {
             $statement->close();
@@ -101,14 +102,17 @@ class LocationComments {
      * @param  string $date    date of comment, or blank for today
      * @return html          html snippet
      */
-    public static function renderComment( $comment, $date = '') {
+    public static function renderComment( $comment, $date = '', $conditions = '') {
         if ( $date == '' ) {
             $date = date('F jS, Y');
         }
         ?>
         <div class="comment">
             <p><?php echo htmlspecialchars_decode($comment) ?></p>
-            <div class="date-posted">Posted on <?= $date ?></div>
+            <div class="date-posted">
+                Posted on <?= $date ?><br>
+                <?= $conditions ?>
+            </div>
         </div>
         <?php
     }

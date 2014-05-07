@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `location` varchar(255) NOT NULL,
   `comment` text NOT NULL,
   `date` datetime NOT NULL,
+  `conditions` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
