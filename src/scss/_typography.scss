@@ -5,6 +5,11 @@
     line-height: 1.25em;
     word-wrap: break-word;
     font-weight: lighter;
+
+    @media screen and (max-width: $mobile-width) {
+        line-height: 1.125em;
+        padding-bottom: 0.75*$padding-size;
+    }
 }
 
 strong {
@@ -36,17 +41,24 @@ ul {
 form {
     input[type="text"], textarea {
         width: 97%;
-        font-size: 1.25*$font-size;
-        padding: 1%;
+        font-size: $form-font-size;
+        padding: 5px 1%;
         border: 2px inset;
         margin-bottom: $padding-size;
         max-height: 190px;
         @include border-radius(4px, 4px);
+
     }
 
     button {
-        font-size: 1.25*$font-size;
-        height: 2.3125*$font-size;
+        @include border-radius(4px, 4px);
+        background-color: #eeeeee;
+        border: none;
+
+        font-size: $form-font-size;
+        padding: 5px;
+        height: 1.9*$form-font-size;
+
     }
 }
 

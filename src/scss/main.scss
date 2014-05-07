@@ -2,6 +2,7 @@
 @import 'compass/css3';
 
 $font-size: 16px;
+$form-font-size: 1.25*$font-size;
 $padding-size: 15px;
 $font-family: Helvetica, sans-serif;
 
@@ -15,32 +16,33 @@ $mobile-width: 600px;
 @mixin column {
     width: 46%;
     margin: 0;
-    padding: 2%;
+    padding: 0 2% 2%;
     float: left;
 
-    @media (max-width: $mobile-width) {
+    @media screen and (max-width: $mobile-width) {
         width: 89%;
         margin: 0 3.5%;
     }
 }
 
 body {
-    height: 100%;
     background-color: skyblue;
     font-family: $font-family;
 }
 
 #location-form {
     max-width: $mobile-width;
+    width: 90%;
     margin: 0 auto;
     padding: 0 5%;
     
     input[type="text"] {
-        width: 70%;
+        width: 65%;
     }
 
     button {
-        width: 25%;
+        width: 30%;
+        max-width: 120px;
     }
 }
 
@@ -52,7 +54,7 @@ body {
     padding: 0 4%;
     overflow: hidden;
 
-    @media (max-width: $tablet-width) {
+    @media screen and (max-width: $tablet-width) {
         width: 100%;
         padding: 0;
     }
@@ -70,25 +72,28 @@ body {
         .temperature {
             @include text(90px);
             float: left;
+
+            @media screen and (max-width: $mobile-width) {
+                text-align: center;
+            }
         }
         .details {
             @include text(0.9*$font-size);
             float: right;
             width: 30%;
-            font-size: 0.9*$font-size;
 
-
-            @media (max-width: $tablet-width) {
+            @media screen and (max-width: $tablet-width) {
                 width: 100%;
                 list-style-position: inside;
             }
 
-            @media (max-width: $mobile-width) {
-                font-size: $font-size;
+            @media screen and (max-width: $mobile-width) {
+                // set default font-size
+                @include text();
             }
         }
         .conditions {
-            @include text(1.75*$font-size);//font-size: 1.75*$font-size;
+            @include text(1.75*$font-size);
             clear: both;
 
             img {
@@ -97,11 +102,21 @@ body {
                 padding: 0 0 0 $padding-size;
                 width: 75px;
             }
+
+            @media screen and (max-width: $mobile-width) {
+                text-align: center;
+            }
+        }
+
+        @media only screen and (max-device-width: $mobile-width) {
+            @include border-radius(16px, 16px);
         }
     }
 
     .observation {
-        font-size: 0.75*$font-size;
+        @include text(0.75*$font-size);
+        padding-top: $padding-size;
+        float: right;
     }
 
     .forecast {
@@ -125,12 +140,19 @@ body {
     @include column();
 
     #comment-form {
+        overflow: hidden;
+
         textarea {
-            height: 4*$font-size;
+            height: 4*$form-font-size;
+        }
+
+        button {
+            float: right;
         }
     }
 
     .comment {
+        @include text($font-size);
         @include border-radius(4px, 4px);
         background-color: #fff;
         padding: $padding-size;
@@ -138,14 +160,20 @@ body {
 
         .date-posted {
             text-align:right;
-            font-size: 0.9*$font-size;
+            @include text(0.9*$font-size);
+            padding-bottom: 0;
+        }
+
+        @media only screen and (max-device-width: $mobile-width) {
+            @include border-radius(16px, 16px);
         }
     }    
 }
 
 footer {
     @include text();
-    width: 240px;
+    max-width: 240px;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
 
