@@ -17,7 +17,9 @@ $current_conditions = strip_tags( $current_conditions );
 $comment = htmlspecialchars( strip_tags( trim ( nl2br( $comment) ), '<br>' ) );
 
 // save to database
-if ( LocationComments::addComment($comment, $location, $current_conditions ) ) {
-    LocationComments::renderComment( $comment, '', $current_conditions );
+if ( $comment != '' ) {
+    if ( LocationComments::addComment($comment, $location, $current_conditions ) ) {
+        LocationComments::renderComment( $comment, '', $current_conditions );
+    }
 }
 
