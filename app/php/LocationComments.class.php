@@ -45,13 +45,17 @@ class LocationComments {
 
     }
 
+    /**
+     * Destructor method
+     * closes database connection
+     */
     public function __destruct() {
         $this->db->close();
     }
 
     /**
      * Returns multidimensional array of current comments
-     * @return array in format comment['comment'], comment['date']
+     * @return array in format comment['comment'], comment['date'], comment['conditions']
      */
     public function allComments() {
 
@@ -80,7 +84,7 @@ class LocationComments {
 
     /**
      * static function to insert comment into the database 
-     * @param array $comment  array with of the comment to save and conditions
+     * @param array $comment  in format comment['comment'], comment['date'], comment['conditions']
      * @return   success status of insert
      */
     public function addComment( $comment ) {
@@ -100,7 +104,7 @@ class LocationComments {
 
     /**
      * Returns html snippet of comment
-     * @param  array $comment_details  includes comment to render, date (or today) and conditions.
+     * @param  array $comment in format comment['comment'], comment['date'], comment['conditions']
      * @return html          html snippet
      */
     public function renderComment( $comment = array()) {
