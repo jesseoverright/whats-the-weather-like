@@ -8,6 +8,12 @@ include '../../app-config.php';
 
 class LocationComments {
     /**
+     * database connection
+     * @var mysqli
+     */
+    private $db;
+
+    /**
      * multidimensional array of comments (comment, date) from this location
      * @var array 
      */
@@ -32,13 +38,25 @@ class LocationComments {
 
         // connect to database
         try {
-            $db = new mysqli( $settings['dbconfig']['host'], $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
+            $this->db = new mysqli( $settings['dbconfig']['host'], $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
         } catch  (Exception $e) {
             echo 'Database is unavailable';
         }
 
+    }
+
+    public function __destruct() {
+        $this->db->close();
+    }
+
+    /**
+     * Returns multidimensional array of current comments
+     * @return array in format comment['comment'], comment['date']
+     */
+    public function allComments() {
+
         // load comments
-        $statement = $db->prepare("SELECT comment, date, conditions FROM comments WHERE location = ? ORDER BY date DESC");        
+        $statement = $this->db->prepare("SELECT comment, date, conditions FROM comments WHERE location = ? ORDER BY date DESC");
 
         $statement->bind_param('s', $this->location);
 
@@ -56,39 +74,23 @@ class LocationComments {
 
         // clean up database connection
         $statement->close();
-        $db->close();
-    }
 
-    /**
-     * Returns multidimensional array of current comments
-     * @return array in format comment['comment'], comment['date']
-     */
-    public function allComments() {
         return $this->comments;
     }
 
     /**
      * static function to insert comment into the database 
-     * @param string $comment  text of the comment to save
-     * @param string $location location
+     * @param array $comment  array with of the comment to save and conditions
      * @return   success status of insert
      */
-    public static function addComment( $comment, $location, $conditions ) {
-        global $settings;
-        
-        try {
-            $db = new mysqli( $settings['dbconfig']['host'], $settings['dbconfig']['user'], $settings['dbconfig']['password'], $settings['dbconfig']['database']);
-        } catch (Exception $e) {
-            echo 'Database is unavailable';
-        }
+    public function addComment( $comment ) {
 
-        $statement = $db->prepare("INSERT INTO comments (location, comment, date, conditions) VALUES (?, ?, NOW(), ?)");
+        $statement = $this->db->prepare("INSERT INTO comments (location, comment, date, conditions) VALUES (?, ?, NOW(), ?)");
 
-        $statement->bind_param('sss', $location, $comment, $conditions);
+        $statement->bind_param('sss', $this->location, $comment['comment'], $comment['conditions'] );
 
         if ( $statement->execute() ) {
             $statement->close();
-            $db->close();
 
             return TRUE;
         }
@@ -98,20 +100,19 @@ class LocationComments {
 
     /**
      * Returns html snippet of comment
-     * @param  string $comment comment to render
-     * @param  string $date    date of comment, or blank for today
+     * @param  array $comment_details  includes comment to render, date (or today) and conditions.
      * @return html          html snippet
      */
-    public static function renderComment( $comment, $date = '', $conditions = '') {
-        if ( $date == '' ) {
-            $date = date('F jS, Y');
+    public function renderComment( $comment = array()) {
+        if ( $comment['date'] == '' ) {
+            $comment['date'] = date('F jS, Y');
         }
         ?>
         <div class="comment">
-            <p><?php echo htmlspecialchars_decode($comment) ?></p>
+            <p><?php echo htmlspecialchars_decode($comment['comment']) ?></p>
             <div class="date-posted">
-                On <?= $date ?><br>
-                <?= $conditions ?>
+                On <?= $comment['date'] ?><br>
+                <?= $comment['conditions'] ?>
             </div>
         </div>
         <?php

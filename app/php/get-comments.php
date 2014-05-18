@@ -27,5 +27,5 @@ $comments = new LocationComments( $location );
 // return comments
 
 foreach ( $comments->allComments() as $comment ) {
-    $comments->renderComment( $comment['comment'], $comment['date'], $comment['conditions'] );
+    $comments->renderComment( $comment );
 }

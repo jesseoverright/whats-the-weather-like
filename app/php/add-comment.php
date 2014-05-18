@@ -8,18 +8,22 @@ include 'LocationComments.class.php';
 
 // sanitize user data
 $location = $_POST['city'];
-$comment = $_POST['comment'];
-$current_conditions = $_POST['temp'] . "&deg; and " . $_POST['conditions'];
+$new_comment = array(
+    'comment' => $_POST['comment'],
+    'conditions' => $_POST['temp'] . "&deg; and " . $_POST['conditions']
+);
 
 // scrub any html or js from user input
 $location = strip_tags ( $location );
-$current_conditions = strip_tags( $current_conditions );
-$comment = htmlspecialchars( strip_tags( trim ( nl2br( $comment) ), '<br>' ) );
+$new_comment['conditions'] = strip_tags( $new_comment['conditions'] );
+$new_comment['comment'] = htmlspecialchars( strip_tags( trim ( nl2br( $new_comment['comment']) ), '<br>' ) );
+
+$comments = new LocationComments( $location );
 
 // save to database
-if ( $comment != '' ) {
-    if ( LocationComments::addComment($comment, $location, $current_conditions ) ) {
-        LocationComments::renderComment( $comment, '', $current_conditions );
+if ( $new_comment['comment'] != '' ) {
+    if ( $comments->addComment( $new_comment ) ) {
+        $comments->renderComment( $new_comment );
     }
 }
 
