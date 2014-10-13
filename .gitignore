@@ -1,4 +1,6 @@
 .DS_Store
 .sass-cache
 .vagrant
-node_modules/*
+composer.lock
+/node_modules/*
+/vendor
