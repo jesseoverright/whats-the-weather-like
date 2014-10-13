@@ -29,10 +29,11 @@ Comments are stored in a mysql database. All database interactions are handled i
 ## Requirements
 Whats the Weather Like...? requires the LAMP stack. It was developed using:
 
-* Ubuntu 12.04.4 LTS
-* Apache 2.2.22
+* Ubuntu 14.04 LTS
+* Apache 2.4
 * MySQL 5.5.37
-* PHP 5.3.10
+* PHP 5.5.9
+* Laravel 4.2
 * jQuery
 * Sass & Compass
 * GruntJS
@@ -47,7 +48,7 @@ To build the development environment, clone the repo and run:
 
 `vagrant up`
 
-After Vagrant has created the development environment, What's the Weather Like...? will be available at [localhost:1234](http://localhost:1234).
+After Vagrant has created the development environment, What's the Weather Like...? will be available at [weather.dev](http://weather.dev).
 
 ### Manually
 To manually install the app in a development or production environment, symlink the `app/` folder into your www directory. `app-settings.php` should be in the parent directory of `app/` for the app to work correctly.
