@@ -91,8 +91,11 @@ apt-get install -y phpmyadmin
 
 # symlink www folder
 rm -rf /var/www/html
-ln -fs /vagrant/app /var/www/html
+ln -fs /vagrant/public /var/www/html
 
+# setup laravel
+cd /vagrant
+composer install
 
 # restart apache
 sudo service apache2 restart
