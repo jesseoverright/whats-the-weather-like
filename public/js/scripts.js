@@ -10,8 +10,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         e.preventDefault();
 
         // request weather details for location
-        $.post( 'php/get-weather.php' , { location: $('#location').val() }, function(data) {
-            var weather = $.parseJSON(data);
+        $.get( 'api/weather/' , { location: $('#location').val() }, function(weather) {
 
             // clear any previous error messages
             $('.error').remove();
@@ -62,7 +61,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
 
             // load up comments for valid locations
             if ( city !== undefined ) {
-                $.post( 'php/get-comments.php' , { city: city }, function(data) {
+                /*$.post( 'php/get-comments.php' , { city: city }, function(data) {
 
 
                     $('.comments').hide().html( data ).fadeIn();
@@ -91,7 +90,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
                             //$('#comment-form').after(data).hide().fadeIn();
                         });
                     })
-                });
+                });*/
             } else {
                 $('.comments').fadeOut().empty();
             }
