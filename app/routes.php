@@ -17,10 +17,17 @@ Route::get('/', function()
 });
 
 Route::group( array ( 'prefix' => 'api' ), function () {
+    
     Route::resource( 'comments', 'CommentController', array (
-        'only' => array ( 'index', 'store' )
+        'only' => array( 'index', 'store' )
         )
     );
+
+    Route::resource( 'weather', 'WeatherController', array (
+        'only' => array( 'index' )
+        )
+    );
+
 });
 
 App::missing( function( $exception ) {
