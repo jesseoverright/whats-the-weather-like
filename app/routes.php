@@ -18,7 +18,7 @@ Route::get('/', function()
 
 Route::group( array ( 'prefix' => 'api' ), function () {
     Route::resource( 'comments', 'CommentController', array (
-        'only' => array ( 'index', 'store', 'destroy' )
+        'only' => array ( 'index', 'store' )
         )
     );
 });
