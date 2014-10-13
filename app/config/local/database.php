@@ -24,7 +24,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'weather_comments',
-			'username'  => 'weater',
+			'username'  => 'weather',
 			'password'  => 'password',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
