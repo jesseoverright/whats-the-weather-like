@@ -3,5 +3,6 @@
 .vagrant
 composer.lock
 /node_modules/*
+/app/storage
 /vendor
 /bootstrap/compiled.php

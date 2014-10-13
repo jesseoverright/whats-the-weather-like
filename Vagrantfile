@@ -16,6 +16,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Load bootstrap script for provisioning machine
   config.vm.provision :shell, :path => 'provision.sh'
 
+  # Give Vagrant server write permissions
+  config.vm.synced_folder ".", "/vagrant", :mount_options => ['dmode=774','fmode=775']
+
+
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.33.11"
