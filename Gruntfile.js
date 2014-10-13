@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['src/**/*.js'],
-        dest: 'app/js/scripts.js'
+        dest: 'public/js/scripts.js'
       }
     },
     compass: {
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'src',
           src: ['**/*.{png,jpg,gif}'],
-          dest: 'app/'
+          dest: 'public/'
         }]
       }
     },
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'app/js/scripts.min.js': ['<%= concat.dist.dest %>']
+          'public/js/scripts.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
