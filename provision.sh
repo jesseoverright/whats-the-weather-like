@@ -93,9 +93,12 @@ apt-get install -y phpmyadmin
 rm -rf /var/www/html
 ln -fs /vagrant/public /var/www/html
 
-# setup laravel
+# setup laravel and database
 cd /vagrant
 composer install
+php artisan migrate
+php artisan db:seed
+
 
 # restart apache
 sudo service apache2 restart
