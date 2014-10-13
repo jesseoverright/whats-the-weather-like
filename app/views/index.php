@@ -6,8 +6,8 @@
     <meta name="description" content="What's the Weather Like?">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/main.css" />
-    <script src="js/scripts.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="/js/scripts.min.js"></script>
 
 
 </head>
@@ -27,7 +27,7 @@
     <div class="comments"></div>
 
 </div>
-<footer role="footer">Weather data brought to you by <img src="img/wundergroundLogo_4c_horz.png" alt="weather underground"></footer>
+<footer role="footer">Weather data brought to you by <img src="/img/wundergroundLogo_4c_horz.png" alt="weather underground"></footer>
 
 </body>
 </html>
