@@ -1,0 +1,189 @@
+@import 'compass/reset';
+@import 'compass/css3';
+
+$font-size: 16px;
+$form-font-size: 1.25*$font-size;
+$padding-size: 15px;
+$font-family: Helvetica, sans-serif;
+
+
+$tablet-width: 870px;
+
+$mobile-width: 600px;
+
+@import 'typography';
+
+@mixin column {
+    width: 46%;
+    margin: 0;
+    padding: 0 2% 2%;
+    float: left;
+
+    @media screen and (max-width: $mobile-width) {
+        width: 89%;
+        margin: 0 3.5%;
+    }
+}
+
+body {
+    background-color: skyblue;
+    font-family: $font-family;
+}
+
+#location-form {
+    max-width: $mobile-width;
+    width: 90%;
+    margin: 0 auto;
+    padding: 0 5%;
+    
+    input[type="text"] {
+        width: 65%;
+    }
+
+    button {
+        width: 30%;
+        max-width: 120px;
+    }
+}
+
+#container {
+    @include text();
+    width: 92%;
+    margin: 20px auto;
+    min-height: 580px;
+    padding: 0 4%;
+    overflow: hidden;
+
+    @media screen and (max-width: $mobile-width) {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+.weather {
+    @include column();
+    .current-conditions {
+        min-height: 160px;
+        margin: 10px 0 20px;
+        background-color: #fff;
+        padding: 2*$padding-size;
+        @include border-radius(4px, 4px);
+
+        .temperature {
+            @include text(90px);
+            float: left;
+
+            @media screen and (max-width: $mobile-width) {
+                text-align: center;
+            }
+        }
+        .details {
+            @include text(0.9*$font-size);
+            float: right;
+            width: 30%;
+
+            @media screen and (max-width: $tablet-width) {
+                width: 100%;
+                list-style-position: inside;
+            }
+
+            @media screen and (max-width: $mobile-width) {
+                // set default font-size
+                @include text();
+            }
+        }
+        .conditions {
+            @include text(1.75*$font-size);
+            clear: both;
+
+            img {
+                display: inline-block;
+                vertical-align: middle;
+                padding: 0 0 0 $padding-size;
+                width: 75px;
+            }
+
+            @media screen and (max-width: $mobile-width) {
+                text-align: center;
+            }
+        }
+
+        @media only screen and (max-device-width: $mobile-width) {
+            @include border-radius(16px, 16px);
+        }
+    }
+
+    .observation {
+        @include text(0.75*$font-size);
+        padding-top: $padding-size;
+        float: right;
+    }
+
+    .forecast {
+        overflow: hidden;
+
+        h3 {
+            border-bottom: 1px solid black;
+        }
+
+        p {
+            padding-top: 10px;
+
+            img {
+                float: left;
+                padding: 0 $padding-size 1.25*$font-size;
+            }
+        }
+    }
+}
+
+.comments {
+    @include column();
+
+    #comment-form {
+        overflow: hidden;
+
+        textarea {
+            height: 4.45*$form-font-size;
+        }
+
+        button {
+            float: right;
+        }
+    }
+
+    .comment {
+        @include border-radius(4px, 4px);
+        background-color: #fff;
+        padding: $padding-size;
+        margin: $padding-size 0;
+
+        p {
+            @include text($font-size);
+        }
+
+        .date-posted {
+            text-align:right;
+            @include text(0.9*$font-size);
+            padding-bottom: 0;
+        }
+
+        @media only screen and (max-device-width: $mobile-width) {
+            @include border-radius(16px, 16px);
+        }
+    }    
+}
+
+footer {
+    @include text();
+    max-width: 240px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    img {
+        max-width: 100%;
+        width: 200px;
+        vertical-align: text-bottom;
+    }
+}
