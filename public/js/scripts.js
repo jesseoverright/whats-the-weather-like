@@ -10,7 +10,7 @@ if(k&&j[k]&&(e||j[k].data)||void 0!==d||"string"!=typeof b)return k||(k=i?a[h]=c
         e.preventDefault();
 
         // request weather details for location
-        $.get( 'api/weather/' , { location: $('#location').val() }, function(weather) {
+        $.get( '/api/weather/' , { location: $('#location').val() }, function(weather) {
 
             // clear any previous error messages
             $('.error').remove();

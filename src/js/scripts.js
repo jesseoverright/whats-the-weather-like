@@ -6,7 +6,7 @@ $(document).ready(function() {
         e.preventDefault();
 
         // request weather details for location
-        $.get( 'api/weather/' , { location: $('#location').val() }, function(weather) {
+        $.get( '/api/weather/' , { location: $('#location').val() }, function(weather) {
 
             // clear any previous error messages
             $('.error').remove();
