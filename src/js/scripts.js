@@ -65,13 +65,30 @@ $(document).ready(function() {
 
             // load up comments for valid locations
             if ( city !== undefined ) {
-                var location = $('#location').val().split(',');
+                var location = city.split(',');
                 var route = '/api/comments/' + location[1].trim() + '/' + location[0].trim() + '/';
 
-                $.post( route , {}, function(data) {
+                $.post( route , {}, function(comments) {
+                    var html = '<h2>Comments about ' + location + '</h2>';
 
+                    html += '<form id="comment-form" method="POST">';
 
-                    $('.comments').hide().html( data ).fadeIn();
+                    html += '<label for="comment">How does this make you feel?</label>';
+                    html += '<textarea id="comment" name="comment" placeholder="Write your comment about the weather at this location."></textarea>';
+                    html += '<button type="submit">Comment</button>';
+                    html += '</form>';
+                    console.log(comments);
+                    comments.forEach( function(comment) {
+                        html += '<div class="comment">
+                            <p>' + comment.comment + '</p>
+                            <div class="date-posted">
+                                On ' + comment.date + '<br>
+                                ' + comment.conditions + '
+                            </div>
+                        </div>';
+                    });
+
+                    $('.comments').hide().html( html ).fadeIn();
 
                     // add event to process form data from adding a new comment 
                     $('#comment-form').submit(function(e) {
@@ -97,7 +114,7 @@ $(document).ready(function() {
                             //$('#comment-form').after(data).hide().fadeIn();
                         });
                     })
-                });*/
+                });
             } else {
                 $('.comments').fadeOut().empty();
             }
