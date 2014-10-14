@@ -5,8 +5,16 @@ $(document).ready(function() {
         // prevent standard form submit
         e.preventDefault();
 
+        var location = $('#location').val().split(',');
+        var route = '/api/weather/';
+        if ( location.length == 1 ) {
+            route += location[0].trim() + '/';
+        } else {
+            route += location[1].trim() + '/' + location[0].trim() + '/';
+        }
+
         // request weather details for location
-        $.get( '/api/weather/' , { location: $('#location').val() }, function(weather) {
+        $.get( route , {}, function(weather) {
 
             // clear any previous error messages
             $('.error').remove();
@@ -57,7 +65,10 @@ $(document).ready(function() {
 
             // load up comments for valid locations
             if ( city !== undefined ) {
-                /*$.post( 'php/get-comments.php' , { city: city }, function(data) {
+                var location = $('#location').val().split(',');
+                var route = '/api/comments/' + location[1].trim() + '/' + location[0].trim() + '/';
+
+                $.post( route , {}, function(data) {
 
 
                     $('.comments').hide().html( data ).fadeIn();
