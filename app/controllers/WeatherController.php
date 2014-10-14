@@ -1,64 +1,75 @@
 <?php
 
 class WeatherController extends \BaseController {
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * Api info
+     * @var array
      */
-    public function index()
-    {
+    protected $settings;
 
-        $results = array();
+    public function __construct() {
+
+        $this->results = array();
 
         include '../app-config.php';
 
-        $validation_error = "Your location was not recognized as entered. A location must be in city, state or zip code format.";
+        $this->settings = $settings;
 
-        $location = Input::get('location');
-        // check if location has been entered as a zip code
-        if ( is_numeric ( $location ) ) {
-            if ( strlen($location) != 5) 
-                $results['errors'][] = $validation_error;
-            else {
-                $zip = $location;
+        $this->validation_error = "Your location was not recognized as entered. A location must be in city, state or zip code format.";
 
-                $wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/geolookup/conditions/q/$zip.json";
-                $wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/forecast/q/$zip.json";
-            }
-        } else {
-            // isloate city from state using comma as delimiter
-            $location = explode( ',', Input::get('location') );
+    }
 
-            if ( count($location) != 2 ) {
-                $results['errors'][] = $validation_error;
-            } else {
-                // validate city for wunderground, replacing spaces with underscores
-                $city = str_replace( ' ', '_', trim( $location[0] ) );
+    public function zip( $zip ) {
+        if ( strlen($zip) != 5) 
+            $this->results['errors'][] = $this->validation_error;
+        else {
 
-                // calidate state city wunderground
-                $state = strtoupper( substr( trim( $location[1] ), 0, 2 ) );
-
-                $wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/geolookup/conditions/q/$state/$city.json";
-
-                $wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $settings['wunderground-api-key'] . "/forecast/q/$state/$city.json";
-            }
-
+            $this->wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $this->settings['wunderground-api-key'] . "/geolookup/conditions/q/$zip.json";
+            $this->wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $this->settings['wunderground-api-key'] . "/forecast/q/$zip.json";
         }
 
+        $this->get_weatherunderground_results();
+
+        return Response::json( $this->results );
+    }
+
+    /**
+     * Gets weather by city & state.
+     *
+     * @return Response
+     */
+    public function city( $state, $city )
+    {
+            
+        // validate city for wunderground, replacing spaces with underscores
+        $city = str_replace( ' ', '_', trim( $city ) );
+
+        // calidate state city wunderground
+        $state = strtoupper( substr( trim( $state ), 0, 2 ) );
+
+        $this->wunderground_api['conditions'] = "http://api.wunderground.com/api/" . $this->settings['wunderground-api-key'] . "/geolookup/conditions/q/$state/$city.json";
+
+        $this->wunderground_api['forecast'] = "http://api.wunderground.com/api/" . $this->settings['wunderground-api-key'] . "/forecast/q/$state/$city.json";
+
+        $this->get_weatherunderground_results();
+
+        // return results as json object
+        return Response::json( $this->results );
+    }
+
+    protected function get_weatherunderground_results() {
         // if api calls have been constructed and no errors have been triggered, make wunderground api call
-        if ( ! empty( $wunderground_api ) && empty($results['errors']) ) {
+        if ( ! empty( $this->wunderground_api ) && empty( $this->results['errors']) ) {
             
             // get current conditions
-            $results_string = file_get_contents( $wunderground_api['conditions'] );
+            $results_string = file_get_contents( $this->wunderground_api['conditions'] );
             $parsed_json = json_decode( $results_string );
             $current_conditions = $parsed_json->current_observation;
 
             if ( empty( $current_conditions ) ) {
-                $results['errors'][] = "Your location does not exist as you have entered it. A location must be in city, state or zip code format";
+                $this->results['errors'][] = "Your location does not exist as you have entered it. A location must be in city, state or zip code format";
             } else {
-                $results = array (
+                $this->results = array (
                     'location' => $current_conditions->display_location->full,
                     'observation_location' => $current_conditions->observation_location->full,
                     'observation_time' => $current_conditions->observation_time,
@@ -76,11 +87,11 @@ class WeatherController extends \BaseController {
             }
 
             // get forecast
-            $results_string = file_get_contents( $wunderground_api['forecast'] );
+            $results_string = file_get_contents( $this->wunderground_api['forecast'] );
             $parsed_json = json_decode( $results_string );
             $forecast = $parsed_json->forecast->txt_forecast->forecastday;
 
-            $results['forecast'] = array (
+            $this->results['forecast'] = array (
                 'today' => array (
                     'text' => $forecast[0]->fcttext,
                     'icon' => $forecast[0]->icon_url,
@@ -98,9 +109,6 @@ class WeatherController extends \BaseController {
                 ),
             );
         }
-
-        // return results as json object
-        return Response::json( $results );
     }
 
 }

@@ -7,9 +7,12 @@ class CommentController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function show( $state, $city ) 
 	{
-		return Response::json( Comment::get() );
+		$location = $city . ', ' . $state;
+		$comments = Comment::where('location', '=', $city . ', ' . $state )->get();
+
+		return Response::json( $comments );
 	}
 
 
@@ -21,10 +24,10 @@ class CommentController extends \BaseController {
 	public function store()
 	{
 		Comment::create( array(
-			'location'   => Input::get( 'location' ),
-			'comment'    => Input::get( 'comment' ),
-			'date'       => Input::get( 'date' ),
-			'conditions' => Input::get( 'conditions' )
+			'location'   => Input::post( 'location' ),
+			'comment'    => Input::post( 'comment' ),
+			'date'       => Input::post( 'date' ),
+			'conditions' => Input::post( 'conditions' )
 			)
 		);
 

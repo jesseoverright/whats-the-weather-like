@@ -18,15 +18,11 @@ Route::get('/', function()
 
 Route::group( array ( 'prefix' => 'api' ), function () {
     
-    Route::resource( 'comments', 'CommentController', array (
-        'only' => array( 'index', 'store' )
-        )
-    );
+    Route::get( 'comments/{state}/{city}', array( 'uses' => 'CommentController@show' ) );
 
-    Route::resource( 'weather', 'WeatherController', array (
-        'only' => array( 'index' )
-        )
-    );
+    Route::get( 'weather/{zip}', array( 'uses' => 'WeatherController@zip' ) );
+
+    Route::get( 'weather/{state}/{city}', array( 'uses' => 'WeatherController@city' ) );
 
 });
 
