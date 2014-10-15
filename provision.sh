@@ -71,11 +71,6 @@ then
 
     touch /var/log/databasesetup
 
-    if [ -f /vagrant/src/comments_db.sql ];
-    then
-        mysql -uroot -p$MYSQL_ROOT_PASSWORD $DATABASE_NAME < /vagrant/src/comments_db.sql
-    fi
-
 fi
 
 # configure phpmyadmin
