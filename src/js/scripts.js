@@ -5,9 +5,16 @@ $(document).ready(function() {
         // prevent standard form submit
         e.preventDefault();
 
+        var location = $('#location').val().split(',');
+        var route = '/api/weather/';
+        if ( location.length == 1 ) {
+            route += location[0].trim() + '/';
+        } else {
+            route += location[1].trim() + '/' + location[0].trim() + '/';
+        }
+
         // request weather details for location
-        $.post( 'php/get-weather.php' , { location: $('#location').val() }, function(data) {
-            var weather = $.parseJSON(data);
+        $.get( route , {}, function(weather) {
 
             // clear any previous error messages
             $('.error').remove();
@@ -58,33 +65,58 @@ $(document).ready(function() {
 
             // load up comments for valid locations
             if ( city !== undefined ) {
-                $.post( 'php/get-comments.php' , { city: city }, function(data) {
+                var location = city.split(',');
+                var route = '/api/comments/' + location[1].trim() + '/' + location[0].trim() + '/';
 
+                $.post( route , {}, function(comments) {
+                    var html = '<h2>Comments about ' + location + '</h2>';
 
-                    $('.comments').hide().html( data ).fadeIn();
+                    html += '<form id="comment-form" method="POST">';
+
+                    html += '<label for="comment">How does this make you feel?</label>';
+                    html += '<textarea id="comment" name="comment" placeholder="Write your comment about the weather at this location."></textarea>';
+                    html += '<button type="submit">Comment</button>';
+                    html += '</form>';
+
+                    comments.forEach( function(comment) {
+                        html += '<div class="comment">
+                            <p>' + comment.comment + '</p>
+                            <div class="date-posted">
+                                On ' + comment.date + '<br>
+                                ' + comment.conditions + '
+                            </div>
+                        </div>';
+                    });
+
+                    $('.comments').hide().html( html ).fadeIn();
 
                     // add event to process form data from adding a new comment 
                     $('#comment-form').submit(function(e) {
                         e.preventDefault();
 
-                        $.post( 'php/add-comment.php' , { comment: $('#comment').val(), city: city, temp: temp, conditions: conditions }, function(data) {
+                        $.post( 'api/comments/add' , { comment: $('#comment').val(), city: city, temp: temp, conditions: conditions }, function(data) {
                             // clear any previous error messages
                             $('#comment-form .error').remove();
 
-                            // check if comment field is blank and display error message.
-                            if ( $('#comment').val() == '' ) {
-                                $('<p class="error">Comments cannot be left blank.</p>').insertAfter($('#comment')).hide().fadeIn();
-                            }
-
-                            // validate user input is not html, will be sanitized later
-                            if (/<[a-z][\s\S]*>/i.test( $('#comment').val() ) ) {
-                                $('<p class="error">HTML characters are not allowed and will be removed.</p>').insertAfter($('#comment')).hide().fadeIn();
+                            if ( data.errors !== undefined ) {
+                                data.errors.forEach(function (value) {
+                                    $('<p class="error">' + value + '</p>').insertAfter($('#comment')).hide().fadeIn();
+                                });
                             }
 
                             // clear out comment
                             $('#comment').val('');
-                            $(data).insertAfter('#comment-form').hide().fadeIn();
-                            //$('#comment-form').after(data).hide().fadeIn();
+
+                            if ( data.success ) {
+                                var comment = '<div class="comment">
+                                    <p>' + data.content + '</p>
+                                    <div class="date-posted">
+                                        On ' + data.date + '<br>
+                                        ' + data.conditions + '
+                                    </div>
+                                </div>';
+                                $(comment).insertAfter('#comment-form').hide().fadeIn();
+                            }
                         });
                     })
                 });

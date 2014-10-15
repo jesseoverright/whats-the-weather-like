@@ -1,3 +1,8 @@
 .DS_Store
 .sass-cache
 .vagrant
+composer.lock
+/node_modules/*
+/app/storage
+/vendor
+/bootstrap/compiled.php
