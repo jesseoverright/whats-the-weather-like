@@ -20,6 +20,8 @@ Route::group( array ( 'prefix' => 'api' ), function () {
     
     Route::get( 'comments/{state}/{city}', array( 'uses' => 'CommentController@show' ) );
 
+    Route::post( 'comments/add', array( 'uses' => 'CommentController@store' ) );
+
     Route::get( 'weather/{zip}', array( 'uses' => 'WeatherController@zip' ) );
 
     Route::get( 'weather/{state}/{city}', array( 'uses' => 'WeatherController@city' ) );
