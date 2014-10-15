@@ -10,21 +10,10 @@ What's the Weather Like...? is a simple, responsive, single-page weather applica
 ## Application Details
 
 ### Weather Data
-Location data is validated and scrubbed in `php/get-weather.php`. The resulting weather data is returned as JSON and includes the current conditions and forecasts for the next few days for location or error messages if the requested location is not found as typed. `js/scripts.min.js` renders the html from the returned JSON and inserts it into the DOM.
+Location data is available via the REST API endpoints `api/weather/{state}/{city}/` or `api/weather/{zip}/`. The resulting weather data is returned as JSON and includes the current conditions and forecasts for the next few days for location or error messages if the requested location is not found as typed. `js/scripts.min.js` renders the html from the returned JSON and inserts it into the DOM.
 
 ### Comments
-Comments are stored in a mysql database. All database interactions are handled in the php class `php/LocationComments.class.php`. `get-comments.php` and `add-comment.php` are php scripts that run via AJAX when a user adds a comment or looks up the weather at a location. The resulting html is inserted into the DOM using javascript.
-
-### Key Files
-
-* `index.html` - main landing page
-* `css/main.css` - compiled css file from scss
-* `js/scripts.min.js` - minified javascript file for handling ajax requests, rendering weather data, and adding/displaying comments
-* `php/LocationComments.class.php` - Handles all database interactions and html rendering related to comments
-* `php/get-weather.php` - returns JSON data based on location
-* `php/get-comments.php` - generates comment form and comments related to location
-* `php/add-comment.php` - handles comment validation and saving via `LocationComments.class.php`
-
+Comments are stored in a mysql database. Comments are retrieved using the REST api endpoints `api/comments/{state}/{city/}/` and stored with POST calls to `api/comments/`. The resulting JSON is inserted into the DOM using javascript.
 
 ## Requirements
 Whats the Weather Like...? requires the LAMP stack. It was developed using:
@@ -51,12 +40,12 @@ To build the development environment, clone the repo and run:
 After Vagrant has created the development environment, What's the Weather Like...? will be available at [weather.dev](http://weather.dev).
 
 ### Manually
-To manually install the app in a development or production environment, symlink the `app/` folder into your www directory. `app-settings.php` should be in the parent directory of `app/` for the app to work correctly.
+To manually install the app in a development or production environment, symlink the `public/` folder into your www directory. `app-config.php` should be in the parent directory of `app/` for the app to work correctly.
 
-You will also need to create the database and include your wunderground api key in `app-settings.php`.
+You will also need to create the database and include your wunderground api key in `app-config.php`.
 
 #### Setting up the Database
-Database settings for the project are located in `app-settings.php` and can be updated to your desired database host, user, and database name. `comments_db.sql` contains the table structure for the `comments` table and should be run as sql or imported into the newly created database.
+Database settings for the project are located in `app/config/database.php` and can be updated to your desired database host, user, and database name. `app/database/migrations/` contains the table structure for the `comments` table and can be seeded using the laravel commands `php artisan migrate` and `php artisan db:seed`.
 
 ## Browser Compatibility
 
